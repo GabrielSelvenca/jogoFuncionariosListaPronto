@@ -28,7 +28,6 @@ namespace Assets.Scripts
 
             IniciarVinculos();
             GerarConsumiveis();
-            CarregarRanking();
         }
 
         private void IniciarVinculos()
@@ -157,55 +156,6 @@ namespace Assets.Scripts
 
             return true;
         }
-
-        //Tentei fazer um jeito de adicionar informações no ranking
-        public void InserirRanking(string nomeJogador, int pontosGanhos)
-        {
-            var jogador = ranking.ranking.Find(j => j.nome == nomeJogador);
-
-            if (jogador != null)
-            {
-                jogador.pontos += pontosGanhos;
-                Debug.Log($"Jogador {jogador.nome} atualizado com +{pontosGanhos} pontos (Total: {jogador.pontos})");
-            }
-            else
-            {
-                ranking.ranking.Add(new PlayerRank
-                {
-                    nome = nomeJogador,
-                    pontos = pontosGanhos
-                });
-                Debug.Log($"Jogador {nomeJogador} adicionado com {pontosGanhos} pontos.");
-            }
-
-            SalvarRanking();
-        }
-
-        private void SalvarRanking()
-        {
-            string caminho = Path.Combine(Application.persistentDataPath, "ranking.json");
-            string jsonFinal = JsonUtility.ToJson(ranking, true);
-            File.WriteAllText(caminho, jsonFinal);
-            Debug.Log($"Ranking salvo em {caminho}");
-        }
-
-        private void CarregarRanking()
-        {
-            string caminho = Path.Combine(Application.persistentDataPath, "ranking.json");
-            if (File.Exists(caminho))
-            {
-                string json = File.ReadAllText(caminho);
-                ranking = JsonUtility.FromJson<ListaRanking>(json);
-                Debug.Log("Ranking carregado com sucesso.");
-            }
-            else
-            {
-                ranking = new ListaRanking();
-                Debug.Log("Arquivo de ranking não encontrado. Criando novo.");
-            }
-        }
-
-
 
     }
 }

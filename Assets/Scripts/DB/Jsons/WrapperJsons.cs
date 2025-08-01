@@ -22,5 +22,5 @@ public class ListaFuncionariosConsumiveis
 [System.Serializable]
 public class ListaRanking
 {
-    public List<PlayerRank> ranking = new();
+    public List<PlayerRank> ranking;
 }
